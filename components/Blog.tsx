@@ -1,8 +1,22 @@
-import React from 'react'
+"use client";
 
-const Blog = () => {
+import { CategoryContext } from '@/context/CategoryContext';
+import React, { useContext } from 'react'
+
+const Blog = ({blogs}: {blogs:any}) => {
+  const { categoryId } = useContext(CategoryContext);
+  const filteredBlogs = blogs?.filter(
+    (blog: any) => blog.categoryId.$id ===categoryId
+  );  
+
   return (
-    <div>Blog</div>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4'>
+      {filteredBlogs?.map((blog: any) => (
+        <div key={blog.$id}>
+          <BlogCard blog={blog} />
+        </div>
+      ))}
+    </div>
   )
 }
 
